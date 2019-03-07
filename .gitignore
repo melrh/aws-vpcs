@@ -1,13 +1,8 @@
 .DS_Store
 
 # Compiled files
-*.tfstate
-*.tfstate.backup
-*.tfstate.lock.info
-terraform/*.tfstate
-terraform/*.tfstate.backup
-terraform/*.tfstate.lock.info
+**/*.tfstate
+**/*.tfstate.*
 
 # Directories
-.terraform/
-terraform/.terraform
+**/.terraform/
