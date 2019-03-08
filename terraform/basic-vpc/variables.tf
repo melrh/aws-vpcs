@@ -9,3 +9,7 @@ variable aws_region {
 variable vpc_cidr {
   description = "VPC CIDR block"
 }
+
+variable subnet_count {
+  description  =  "Amount created for each private/public subnet"
+}
