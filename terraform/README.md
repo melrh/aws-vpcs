@@ -22,8 +22,10 @@ This will destroy everything built by the specific terraform stack.
 
 This directory creates:
 
-    - A VPC
+    - VPC
     - 2 Public Subnets (dynamically created)
     - 2 Private Subnets (dynamically created)
-    - An Internet Gateway
-    - A Route Table
+    - Internet Gateway
+    - Public Route Table
+    - NAT Gateway attached to 1 Private Subnet
+    - Private Route Table
