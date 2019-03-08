@@ -18,4 +18,12 @@ This will build the stack in aws. The resources will vary depending on which ter
 
 This will destroy everything built by the specific terraform stack.
 
-## Basic VPC
+### Basic VPC
+
+This directory creates:
+
+    - A VPC
+    - 2 Public Subnets (dynamically created)
+    - 2 Private Subnets (dynamically created)
+    - An Internet Gateway
+    - A Route Table
