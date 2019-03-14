@@ -29,3 +29,12 @@ This directory creates:
     - Public Route Table
     - NAT Gateway attached to 1 Private Subnet
     - Private Route Table
+
+
+### VPC with EC2
+
+This directory creates the exact same infrastructure as the Basic VPC, however it additionally creates an EC2 instance in one of the public subnets. The most recent Ubuntu AMI is selected and built in one of the public subnet.
+
+### VPC I/O
+
+The terraform for this VPC is split up into modules, rather than being located in one main.tf file.
