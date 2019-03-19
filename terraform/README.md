@@ -1,5 +1,7 @@
 # Terraform
 
+These directories were developed using Terraform version 0.11.13
+
 This folder contains a number of terraform stacks that will be deployed in AWS. The terraform scripts are currently run under my specific aws profile which is set in the `terraform.tfvars` file, however this must be changed to your own aws profile in order for the script to run.
 
 To build any of the aws stacks, run the terraform script. Enter into the directory of the terraform script you want to run, and run the following commands:
