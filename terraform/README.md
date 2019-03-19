@@ -33,8 +33,46 @@ This directory creates:
 
 ### VPC with EC2
 
-This directory creates the exact same infrastructure as the Basic VPC, however it additionally creates an EC2 instance in one of the public subnets. The most recent Ubuntu AMI is selected and built in one of the public subnet.
+This directory creates the exact same infrastructure as the Basic VPC, however it additionally creates: 
+
+    - an EC2 instance in a public subnet
+
+The most recent Ubuntu AMI is pulled from AWS and is launched as the EC2 instance.
 
 ### VPC I/O
 
-The terraform for this VPC is split up into modules, rather than being located in one main.tf file.
+The terraform for this VPC is split up into modules, rather than being located in one main.tf file. Variables are passed between modules by using the `_interface.tf` and `outputs.tf` files. The directory structure is as follows:
+
+```
+.
+├── _interface.tf
+├── core
+│   ├── _interface.tf
+│   ├── main.tf
+│   └── outputs.tf
+├── front
+│   ├── _interface.tf
+│   ├── main.tf
+│   └── outputs.tf
+├── main.tf
+├── terraform.tfvars
+└── variables.tf
+```
+
+The Core Module creates: 
+
+    - VPC
+    - 2 Public Subnets (dynamically created)
+    - 2 Private Subnets (dynamically created)
+    - Internet Gateway
+    - Public Route Table
+    - NAT Gateway attached to 1 Private Subnet
+    - Private Route Table
+  
+The Front Module creates what will be present in the public subnets. This includes:
+
+    - Load Balancer
+    - Autoscaling Group
+    - Instance Launch Configuration
+
+The Instance Launch Configuration is used to launch EC2 instance(s) which use the most recent Ubuntu AMI. These instances can be launched in either of the 2 public subnets which are covered by the Load Balancer and the Autoscaling Group.
