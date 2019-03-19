@@ -70,6 +70,15 @@ resource "aws_launch_configuration" "ec2-launch-config" {
     security_groups =   ["${aws_security_group.ec2-sg.id}"]
 
     lifecycle   {
-        create_before_destroy   =   true
+        create_before_destroy   =   "true"
     }
+}
+
+resource "aws_autoscaling_group" "autoscale-ec2" {
+    launch_configuration    =   "${aws_launch_configuration.ec2-launch-config.id}"
+    target_group_arns       =   ["${aws_lb_target_group.lb-target.arn}"]
+    min_size                =   "1"
+    max_size                =   "3"
+
+    vpc_zone_identifier     =   ["${var.pubsub_ids}"]
 }
