@@ -41,7 +41,7 @@ This directory creates the exact same infrastructure as the Basic VPC, however i
 
 The most recent Ubuntu AMI is pulled from AWS and is launched as the EC2 instance.
 
-### VPC I/O
+### VPC Modules
 
 The terraform for this VPC is split up into modules, rather than being located in one main.tf file. Variables are passed between modules by using the `_interface.tf` and `outputs.tf` files. The directory structure is as follows:
 
@@ -71,7 +71,16 @@ The Core Module creates:
     - NAT Gateway attached to 1 Private Subnet
     - Private Route Table
   
-The Front Module creates what will be present in the public subnets. This includes:
+The Front Module creates what will be present in the public subnets, which is:
+
+    - An EC2 Instance made from the most recent Ubuntu AMI
+
+
+### VPC Autoscaling
+
+The Autoscaling VPC is the same as the Module VPC above, however additional infrastructure is created in the Front module.
+
+This includes:
 
     - Load Balancer
     - Autoscaling Group
