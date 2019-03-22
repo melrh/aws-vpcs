@@ -14,4 +14,5 @@ module "front" {
     vpc-cidr        =   "${var.vpc-cidr}"
     vpc-id          =   "${module.core.vpc-id}"
     pubsub-ids      =   "${module.core.pubsub-ids}"
+    ssh-ip          =   "${var.ssh-ip}"
 }
