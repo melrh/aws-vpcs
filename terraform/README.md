@@ -74,6 +74,7 @@ The Core Module creates:
 The Front Module creates what will be present in the public subnets, which is:
 
     - An EC2 Instance made from the most recent Ubuntu AMI
+    - A Security Group which allows ssh access from a specific IP address (variable set in terraform.tfvars)
 
 
 ### VPC Autoscaling
