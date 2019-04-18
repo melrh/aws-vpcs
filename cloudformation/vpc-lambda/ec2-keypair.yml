@@ -1,6 +1,5 @@
 Description:
-  VPC with a public and private subnet. Internet Gateway - default route on public subnet. 
-  NAT Gateway - default route in the private subnet.
+  Creates VPC with Lambda fuction which adds a KeyPair from S3 to EC2
 
 Parameters:
   VpcCIDR:
@@ -167,11 +166,13 @@ Resources:
             Statement: 
               - 
                 Effect: "Allow"
-                Action: "s3:*"
+                Action: 
+                  - "s3:*"
+                  - "ec2:*"
                 Resource: "*"
 
 
-  # Lambda Function that adds Key Pair #
+  # Adds Lambda Function that adds Key Pair #
   
   AddKeyPairLambda:
     Type: AWS::Lambda::Function
@@ -189,26 +190,36 @@ Resources:
           import logging
           import cfnresponse
 
-          s3 = boto3.client('s3')
-          ec2 = boto3.client('ec2')
-
           def lambda_handler(event, context):
-              try:
-                  bucket_name = 'mh-pubkey'
-                  key = 'mh.pub'
-                  key_name = 'mh'
 
-                  response = s3.get_object(Bucket=bucket_name, Key=key)
-                  s3_key = response['Body'].read()
+            s3 = boto3.client('s3')
+            ec2 = boto3.client('ec2')
 
-                  ec2.import_key_pair(KeyName=key_name, PublicKeyMaterial=s3_key)
+            try:
+                bucket_name = 'mh-pubkey'
+                key = 'mh.pub'
+                key_name = 'mh'
 
-                  cfnresponse.send(event, context, cfnresponse.SUCCESS)
+                response = s3.get_object(Bucket=bucket_name, Key=key)
+                s3_key = response['Body'].read()
 
-              except Exception as e:
-                  logging.exception(e)
-                  cfnresponse.send(event, context, cfnresponse.FAILED)
-                
+                ec2.import_key_pair(KeyName=key_name, PublicKeyMaterial=s3_key)
+
+                cfnresponse.send(event, context, cfnresponse.SUCCESS)
+              
+            except Exception as e:
+                logging.exception(e)
+                cfnresponse.send(event, context, cfnresponse.FAILED)
+
+
+  # Runs Lambda Function #
+
+  RunKeyPairLambda:
+    Type: Custom::KeyBoi
+    Properties:
+      ServiceToken: !GetAtt AddKeyPairLambda.Arn
+
+
   # Security Group #
 
   EC2SecurityGroup:
