@@ -14,37 +14,37 @@ data "aws_ami" "ubuntu" {
     owners  =   ["099720109477"]
 }
 
-resource "aws_security_group" "ec2-sg" {
-    name        = "ec2-sg"
-    vpc_id      =   "${var.vpc-id}"
+resource "aws_security_group" "ec2_sg" {
+    name        = "ec2_sg"
+    vpc_id      =   var.vpc_id
 
     ingress {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["${var.ssh-ip}"]
+        cidr_blocks = [var.ssh_ip]
     }
 
     egress  {
         from_port   =   22
         to_port     =   22
         protocol    =   "tcp"
-        cidr_blocks =   ["${var.ssh-ip}"]
+        cidr_blocks =   [var.ssh_ip]
     }
 
-    tags    {
-        Name    =   "ec2-sg"
+    tags = {
+        Name    =   "terraform_lab"
     }
 }
 
-resource "aws_instance" "ubuntu-ec2" {
-    subnet_id       =   "${var.pubsub-ids[0]}"
-    security_groups =   ["${aws_security_group.ec2-sg.id}"]
+resource "aws_instance" "ubuntu_ec2" {
+    subnet_id       =   var.pubsub_ids[0]
+    security_groups =   [aws_security_group.ec2_sg.id]
 
-    ami             =   "${data.aws_ami.ubuntu.id}"
+    ami             =   data.aws_ami.ubuntu.id
     instance_type   =   "t2.micro"
 
-    tags    {
-        Name    =   "ubuntu-ec2"
+    tags = {
+        Name    =   "terraform_lab"
     }
 }

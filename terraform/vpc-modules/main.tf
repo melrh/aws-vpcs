@@ -1,18 +1,17 @@
 provider "aws" {
-    profile =   "${var.aws-profile}"
-    region  =   "${var.aws-region}"
+  region = var.aws_region
 }
 
 module "core" {
-    source          =   "core"
-    vpc-cidr        =   "${var.vpc-cidr}"
-    subnet-count    =   "${var.subnet-count}"
+  source       = "./core"
+  vpc_cidr     = var.vpc_cidr
+  subnet_count = var.subnet_count
 }
 
 module "front" {
-    source          =   "front"
-    vpc-cidr        =   "${var.vpc-cidr}"
-    vpc-id          =   "${module.core.vpc-id}"
-    pubsub-ids      =   "${module.core.pubsub-ids}"
-    ssh-ip          =   "${var.ssh-ip}"
+  source     = "./front"
+  vpc_cidr   = var.vpc_cidr
+  vpc_id     = module.core.vpc_id
+  pubsub_ids = module.core.pubsub_ids
+  ssh_ip     = var.ssh_ip
 }

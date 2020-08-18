@@ -1,15 +1,19 @@
-variable "vpc-cidr" {
-
+variable "vpc_cidr" {
+    description = "The VPC's CIDR block"
+    type = string
 }
 
-variable "vpc-id" {
-
+variable "vpc_id" {
+    description = "The VPC's ID"
+    type = string
 }
 
-variable "pubsub-ids" {
-    type    =   "list"
+variable "pubsub_ids" {
+    description = "A list of Public Subnet IDs"
+    type    =   list(any)
 }
 
-variable "ssh-ip" {
-    
+variable "ssh_ip" {
+    description = "The IP used for SSH"
+    type = string
 }

@@ -1,19 +1,20 @@
-variable "aws-profile"  {
-    description =   "The IAM user profile used to build the infrastructure"
+variable "aws_region" {
+  description = "The region the vpc will be built in"
+  type        = string
 }
 
-variable "aws-region"   {
-    description =   "The region the vpc will be built in"
+variable "vpc_cidr" {
+  description = "The cidr block reserved for the vpc"
+  type        = string
 }
 
-variable "vpc-cidr" {
-    description =   "The cidr block reserved for the vpc"
+variable "subnet_count" {
+  description = "The amount of each public & private subnets that will be created"
+  type        = string
 }
 
-variable "subnet-count" {
-    description =   "The amount of each public & private subnets that will be created"
+variable "ssh_ip" {
+  description = "My IP address for ssh access to the ec2 instance"
+  type        = string
 }
 
-variable "ssh-ip"   {
-    description =   "My IP address for ssh access to the ec2 instance"
-}
