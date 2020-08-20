@@ -8,5 +8,5 @@ variable "vpc_id" {
 
 variable "pubsub_ids" {
     description =   ""
-    type        =   "list"
+    type        =   list(string)
 }
